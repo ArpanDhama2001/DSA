@@ -7,40 +7,57 @@ public class SearchRoatatedArray {
         int target = 3;
         System.out.println(search2(arr2, target));
     }
+
+    // imporoved findPivot function
     static int findPivot(int[] arr) {
         int start = 0;
         int end = arr.length - 1;
         while(start <= end) {
             int mid = start + (end - start) / 2;
-            if(mid < arr.length -1 && arr[mid] > arr[mid+1]) return mid; // only pivot and pivot + 1 are decreasing, thus this is breaking condition.
-            if(arr[mid] < arr[start]) {
-                end = mid-1;
+
+            // case 1: if mid > mid + 1
+            if((mid != arr.length - 1) && (arr[mid] > arr[mid+1])) {
+                return mid;
             }
-            if(arr[mid] >= arr[start]) {
-                start = mid+1;
+
+            // case 2: if mid < mid - 1; then mid - 1 is pivot
+            if((mid != 0) && (arr[mid] < arr[mid-1])) {
+                return mid - 1;
+            }
+
+            // case 3: mid < start; pivot lies before mid
+            if(arr[mid] <= arr[start]) {
+                end = mid - 1;
+            }
+
+            // case 4: mid >= start;
+            else {
+                start = mid + 1;
             }
         }
-        return -1;
+        return  -1;
     }
 
-    static int search(int[] arr, int target) { // this function is messy and using brute force to search in both arrays.
-        int piviot = findPivot(arr);
-        if(piviot == -1) {
-            return binarySearch(arr, target, 0, arr.length - 1);
-        }
-        else {
-            if(arr[piviot] == target) {
-                return piviot;
-            } else {
-                int ans = binarySearch(arr, target, 0, piviot);
-                if(ans != -1) {
-                    return ans;
-                } else {
-                    ans = binarySearch(arr, target, piviot+1, arr.length - 1);
-                    return ans;
-                }
+    static int findPivotInDuplicate(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while(start <= end) {
+            int mid = start + (end - start) / 2;
+
+            // case 1: if mid > mid + 1
+            if((mid != arr.length - 1) && (arr[mid] > arr[mid+1])) {
+                return mid;
             }
+
+            // case 2: if mid < mid - 1; then mid - 1 is pivot
+            if((mid != 0) && (arr[mid] < arr[mid-1])) {
+                return mid - 1;
+            }
+
+            // case 3: if mid, start and end all are equal
+
         }
+        return  -1;
     }
 
     // improved search function
