@@ -1,0 +1,37 @@
+import java.util.Arrays;
+
+public class CyclicSort {
+    public static void main(String[] args) {
+        int[] arr = {3,5,2,1,4};
+        cyclicSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    /*
+    * KEY POINT: For range 1 to N.
+    * WORKING:
+    *   Every element in the sorted order would be placed at index "element - 1".
+    *   Check,
+    *       if (element != element at correct index),
+    *           swap element with element on the correct index;
+    *       if no,
+    *           just increment i.
+    * */
+    static void cyclicSort(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+            int correct = arr[i] - 1;
+            if (arr[i] != arr[correct]) {
+                swap(arr, i , correct);
+            } else {
+                i++;
+            }
+        }
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
